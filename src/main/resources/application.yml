@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: expenses-api
+
+  # Database Configuration
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: expenses
+      uuid-representation: standard
+
+# Metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus

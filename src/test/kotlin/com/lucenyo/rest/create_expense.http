@@ -1,0 +1,13 @@
+
+### Create Expense
+
+POST http://localhost:8080/api/v1/expenses
+Content-Type: application/json
+
+{
+  "description": "Pago de Taxi",
+  "amount": 123.23,
+  "date": "2022-04-17T20:00:00.000Z",
+  "friendName": "Jose",
+  "friendGroupId": "bfca9b9b-f35f-4c6e-bec9-59d79d1af7e2"
+}

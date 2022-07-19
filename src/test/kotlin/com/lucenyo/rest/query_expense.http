@@ -1,0 +1,5 @@
+
+### Create Expense
+
+GET http://localhost:8080/api/v1/expenses/6e5c84e4-2d81-477e-a74b-5e44b37fc914
+Content-Type: application/json

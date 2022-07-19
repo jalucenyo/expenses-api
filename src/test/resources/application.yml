@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: expenses-api
+
+  # Database Configuration
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: expenses
+      uuid-representation: standard
+
+  # Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.eu-west-1.amazonaws.com/fake_id_group_pool
+
+# Metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus

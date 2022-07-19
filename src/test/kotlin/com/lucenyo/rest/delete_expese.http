@@ -1,0 +1,5 @@
+
+### Create Friend Group
+
+DELETE http://localhost:8080/api/v1/expenses/f29c065a-a8d0-4032-ac03-cfbe9068a255
+Content-Type: application/json
