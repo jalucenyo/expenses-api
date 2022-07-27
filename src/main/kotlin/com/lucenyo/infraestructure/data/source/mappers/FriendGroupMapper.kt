@@ -12,14 +12,16 @@ class FriendGroupMapper {
       id = domain.id,
       name = domain.name,
       friends = domain.friends,
+      userId = domain.userId,
     )
   }
 
-  fun toDomain(entity: FriendGroupDocument): FriendGroup {
+  fun toDomain(document: FriendGroupDocument): FriendGroup {
     return FriendGroup(
-      id = entity.id,
-      name = entity.name,
-      friends = entity.friends
+      id = document.id,
+      name = document.name,
+      friends = document.friends,
+      userId = document.userId
     )
   }
 

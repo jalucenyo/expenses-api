@@ -4,13 +4,9 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.UUID
 
-@Document("friends_group")
-data class FriendGroupDocument(
-
+@Document("tickets")
+data class TicketDocument(
   @Id
   val id: UUID,
-  val name: String,
-  val friends: List<String>,
-  val userId: String
-
+  val expenseId: UUID
 )

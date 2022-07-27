@@ -17,6 +17,7 @@ data class ExpenseDocument(
   val currency: String,
   val category: String,
   val groupId: UUID,
-  val friend: String
+  val friend: String,
+  val userId: String,
 
 )

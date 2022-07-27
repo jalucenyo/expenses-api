@@ -9,6 +9,6 @@ data class FriendGroupUseCases (
   val update: UpdateFriendGroupUseCase,
   val delete: DeleteFriendGroupUseCase,
 
-  val fetchByUserId: FetchFriendGroupByUserIdUseCase,
+  val fetchByUserId: QueryFriendGroupByUserIdUseCase,
 
   )

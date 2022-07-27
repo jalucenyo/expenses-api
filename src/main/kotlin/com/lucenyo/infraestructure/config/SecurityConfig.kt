@@ -19,7 +19,9 @@ class SecurityConfig {
       .cors()
       .and().csrf().disable()
       .authorizeExchange{
-        it.pathMatchers("/actuator/**").permitAll()
+        it
+          .pathMatchers("/actuator/**").permitAll()
+          .pathMatchers("/docs/**").permitAll()
           .anyExchange().authenticated()
       }.oauth2ResourceServer().jwt()
 

@@ -16,20 +16,22 @@ class ExpenseMapper {
       currency = domain.currency,
       category = domain.category,
       groupId = domain.groupId,
-      friend = domain.friend
+      friend = domain.friend,
+      userId = domain.userId,
     )
   }
 
-  fun toDomain(entity: ExpenseDocument): Expense {
+  fun toDomain(document: ExpenseDocument): Expense {
     return Expense(
-      id = entity.id,
-      description = entity.description,
-      date = entity.date,
-      amount = entity.amount,
-      currency = entity.currency,
-      category = entity.category,
-      groupId = entity.groupId,
-      friend = entity.friend
+      id = document.id,
+      description = document.description,
+      date = document.date,
+      amount = document.amount,
+      currency = document.currency,
+      category = document.category,
+      groupId = document.groupId,
+      friend = document.friend,
+      userId = document.userId,
     )
   }
 

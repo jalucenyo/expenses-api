@@ -21,7 +21,8 @@ class UpdateFriendGroupUseCaseImpl(
 
   override fun invoke(id: UUID, command: UpdateFriendGroupCommand): Mono<FriendGroup> {
 
-    return repository.findById(id)
+    //TODO: Authentication
+    return repository.findByIdAndUserId(id, "")
       .map {
         it.copy(
           name = command.name,

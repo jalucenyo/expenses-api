@@ -3,6 +3,7 @@ package com.lucenyo.domain.usecases
 import com.lucenyo.domain.commands.CreateFriendGroupCommand
 import com.lucenyo.domain.models.FriendGroup
 import com.lucenyo.domain.repositories.FriendGroupRepository
+import com.lucenyo.infraestructure.security.AuthenticationFacade
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
@@ -14,20 +15,25 @@ interface CreateFriendGroupUseCase {
 
 @Service
 class CreateFriendGroupUseCaseImpl(
-  val repository: FriendGroupRepository
+  val repository: FriendGroupRepository,
+  val authentication: AuthenticationFacade,
 ): CreateFriendGroupUseCase {
 
   private val log = LoggerFactory.getLogger(this.javaClass)
 
   override fun invoke(command: CreateFriendGroupCommand): Mono<UUID> {
 
-    return repository.create(
-      FriendGroup(
-        id = UUID.randomUUID(),
-        name = command.name,
-        friends = command.friends
-      )
-    ).doOnSuccess{ log.info("Create friend group: {}", it)  }
+    return authentication.getAuthentication()
+      .flatMap { auth -> repository.create(
+        FriendGroup(
+          id = UUID.randomUUID(),
+          name = command.name,
+          friends = command.friends,
+          userId = auth.name
+        ))
+      }
+      .doOnSuccess{ log.info("Create friend group: {}", it)  }
+
   }
 
 }

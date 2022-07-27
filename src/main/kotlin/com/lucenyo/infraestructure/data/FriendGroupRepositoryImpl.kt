@@ -28,12 +28,12 @@ class FriendGroupRepositoryImpl(
     return dataSource.save(mapper.toEntity(friendGroup)).map(mapper::toDomain)
   }
 
-  override fun findById(id: UUID): Mono<FriendGroup> {
-    return dataSource.findById(id).map(mapper::toDomain);
+  override fun findByIdAndUserId(id: UUID, userId: String): Mono<FriendGroup> {
+    return dataSource.findByIdAndUserId(id, userId).map(mapper::toDomain);
   }
 
-  override fun findAll(): Flux<FriendGroup> {
-    return dataSource.findAll().map(mapper::toDomain);
+  override fun findByUserId(userId: String): Flux<FriendGroup> {
+    return dataSource.findByUserId(userId).map(mapper::toDomain);
   }
 
 }

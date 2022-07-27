@@ -21,6 +21,7 @@ class UpdateExpenseUseCaseImpl(
 
   override fun invoke(id: UUID, command: UpdateExpenseCommand): Mono<Expense> {
 
+    // TODO: Authentication
     return expenseRepository.findById(id)
       .map {
         Expense(
@@ -31,7 +32,8 @@ class UpdateExpenseUseCaseImpl(
           currency = command.currency,
           category = command.category,
           friend = command.friendName,
-          groupId = it.groupId
+          groupId = it.groupId,
+          userId = ""
         )
       }
       .flatMap(expenseRepository::update)

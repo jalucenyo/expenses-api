@@ -13,8 +13,8 @@ interface FriendGroupRepository {
 
   fun update(friendGroup: FriendGroup): Mono<FriendGroup>
 
-  fun findById(id: UUID): Mono<FriendGroup>
+  fun findByIdAndUserId(id: UUID, userId: String): Mono<FriendGroup>
 
-  fun findAll(): Flux<FriendGroup>
+  fun findByUserId(userId: String): Flux<FriendGroup>
 
 }
