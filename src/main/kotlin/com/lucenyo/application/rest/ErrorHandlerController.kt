@@ -13,12 +13,23 @@ class ErrorHandlerController {
 
   @ExceptionHandler(value = [(NotFoundException::class)])
   fun handleNotFoundException(exception: NotFoundException): ResponseEntity<ErrorResponse> {
-    return ResponseEntity( ErrorResponse(exception.code, exception.message), HttpStatus.NOT_FOUND)
+    return ResponseEntity(
+      ErrorResponse(
+        code = exception.code,
+        message = exception.message,
+        field = exception.field
+      ),
+      HttpStatus.NOT_FOUND)
   }
 
   @ExceptionHandler(value = [(UploadErrorException::class)])
   fun handleNotFoundException(exception: UploadErrorException): ResponseEntity<ErrorResponse> {
-    return ResponseEntity( ErrorResponse(exception.code, exception.message), HttpStatus.NOT_FOUND)
+    return ResponseEntity(
+      ErrorResponse(
+        code = exception.code,
+        message = exception.message
+      ),
+      HttpStatus.NOT_FOUND)
   }
 
 }

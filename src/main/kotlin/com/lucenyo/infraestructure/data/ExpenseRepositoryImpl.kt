@@ -28,8 +28,8 @@ class ExpenseRepositoryImpl(
     return dataSource.save(mapper.toDocument(expense)).map(mapper::toDomain)
   }
 
-  override fun findById(id: UUID): Mono<Expense> {
-    return dataSource.findById(id).map(mapper::toDomain)
+  override fun findByIdAndUserId(id: UUID, userId: String): Mono<Expense> {
+    return dataSource.findByIdAndUserId(id, userId).map(mapper::toDomain)
   }
 
   override fun findByFriendGroupId(friendGroupId: UUID): Flux<Expense> {

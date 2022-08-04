@@ -17,7 +17,7 @@ class FriendGroupRepositoryImpl(
 ) : FriendGroupRepository{
 
   override fun create(friendGroup: FriendGroup): Mono<UUID> {
-    return dataSource.save(mapper.toEntity(friendGroup)).map(FriendGroupDocument::id)
+    return dataSource.save(mapper.toDocument(friendGroup)).map(FriendGroupDocument::id)
   }
 
   override fun delete(id: UUID): Mono<Void> {
@@ -25,7 +25,7 @@ class FriendGroupRepositoryImpl(
   }
 
   override fun update(friendGroup: FriendGroup): Mono<FriendGroup> {
-    return dataSource.save(mapper.toEntity(friendGroup)).map(mapper::toDomain)
+    return dataSource.save(mapper.toDocument(friendGroup)).map(mapper::toDomain)
   }
 
   override fun findByIdAndUserId(id: UUID, userId: String): Mono<FriendGroup> {

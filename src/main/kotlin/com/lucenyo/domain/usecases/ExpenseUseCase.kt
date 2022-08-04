@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service
 data class ExpenseUseCase(
 
   val create: CreateExpenseUseCase,
-  val update: UpdateExpenseUseCase,
   val delete: DeleteExpenseUseCase,
 
   val fetchById: FetchExpenseByIdUseCase,

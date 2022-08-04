@@ -9,8 +9,9 @@ data class FriendGroupDocument(
 
   @Id
   val id: UUID,
+  val userId: String,
   val name: String,
-  val friends: List<String>,
-  val userId: String
+  val currency: String,
+  val friends: List<UUID>,
 
 )

@@ -1,6 +1,6 @@
 package com.lucenyo.application.rest
 
-import com.lucenyo.domain.commands.CreateTicketCommand
+import com.lucenyo.domain.commands.CreateTicket
 import com.lucenyo.domain.usecases.TicketUseCases
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,10 +17,15 @@ class TicketRestController(
 ) {
 
   @PostMapping
-  fun create(@RequestPart command: CreateTicketCommand,
+  fun create(@RequestPart command: CreateTicket,
              @RequestPart ticketImage: Mono<FilePart>): Mono<UUID> {
 
     return ticketUseCases.upload(command, ticketImage)
   }
+
+//  @GetMapping
+//  fun getTicket(@PathVariable ticketId: UUID): Mono<UUID> {
+//
+//  }
 
 }

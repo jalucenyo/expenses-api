@@ -1,6 +1,6 @@
 package com.lucenyo.domain.usecases
 
-import com.lucenyo.domain.commands.CreateFriendGroupCommand
+import com.lucenyo.domain.commands.CreateFriendGroup
 import com.lucenyo.domain.models.FriendGroup
 import com.lucenyo.domain.repositories.FriendGroupRepository
 import com.lucenyo.infraestructure.security.AuthenticationFacade
@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono
 import java.util.UUID
 
 interface CreateFriendGroupUseCase {
-  operator fun invoke(command: CreateFriendGroupCommand): Mono<UUID>
+  operator fun invoke(createGroup: CreateFriendGroup): Mono<UUID>
 }
 
 @Service
@@ -21,14 +21,15 @@ class CreateFriendGroupUseCaseImpl(
 
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  override fun invoke(command: CreateFriendGroupCommand): Mono<UUID> {
+  override fun invoke(createGroup: CreateFriendGroup): Mono<UUID> {
 
     return authentication.getAuthentication()
       .flatMap { auth -> repository.create(
         FriendGroup(
           id = UUID.randomUUID(),
-          name = command.name,
-          friends = command.friends,
+          name = createGroup.name,
+          friends = createGroup.friends,
+          currency = createGroup.currency,
           userId = auth.name
         ))
       }

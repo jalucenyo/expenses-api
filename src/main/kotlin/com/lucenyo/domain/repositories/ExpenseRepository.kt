@@ -13,8 +13,7 @@ interface ExpenseRepository {
 
   fun update(expense: Expense): Mono<Expense>
 
-  fun findById(id: UUID): Mono<Expense>
-
   fun findByFriendGroupId(friendGroupId: UUID): Flux<Expense>
 
+  fun findByIdAndUserId(id: UUID, userId: String): Mono<Expense>
 }

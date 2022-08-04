@@ -3,7 +3,7 @@ package com.lucenyo.domain.commands
 import java.math.BigDecimal
 import java.time.OffsetDateTime
 
-data class UpdateExpenseCommand(
+data class UpdateExpense(
   val description: String,
   val amount: BigDecimal,
   val currency: String,

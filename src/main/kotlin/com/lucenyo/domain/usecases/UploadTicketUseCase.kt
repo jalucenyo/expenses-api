@@ -1,6 +1,6 @@
 package com.lucenyo.domain.usecases
 
-import com.lucenyo.domain.commands.CreateTicketCommand
+import com.lucenyo.domain.commands.CreateTicket
 import com.lucenyo.domain.exceptions.UploadErrorException
 import com.lucenyo.domain.models.Ticket
 import com.lucenyo.domain.repositories.TicketRepository
@@ -12,7 +12,7 @@ import java.util.UUID
 
 interface UploadTicketUseCase {
 
-  operator fun invoke(command: CreateTicketCommand, ticketImage: Mono<FilePart>): Mono<UUID>
+  operator fun invoke(command: CreateTicket, ticketImage: Mono<FilePart>): Mono<UUID>
 
 }
 
@@ -23,7 +23,7 @@ class UploadTicketUseCaseImpl(
 
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  override fun invoke(command: CreateTicketCommand, ticketImage: Mono<FilePart>): Mono<UUID> {
+  override fun invoke(command: CreateTicket, ticketImage: Mono<FilePart>): Mono<UUID> {
 
     return ticketImage
       .map {

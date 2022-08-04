@@ -1,11 +1,9 @@
-package com.lucenyo.domain.models
+package com.lucenyo.domain.commands
 
 import java.util.UUID
 
-data class FriendGroup(
-  val id: UUID,
+data class CreateFriendGroup(
   val name: String,
   val friends: List<UUID>,
   val currency: String,
-  val userId: String
 )

@@ -13,11 +13,9 @@ class ExpenseMapper {
       description = domain.description,
       date = domain.date,
       amount = domain.amount,
-      currency = domain.currency,
-      category = domain.category,
       groupId = domain.groupId,
-      friend = domain.friend,
       userId = domain.userId,
+      whoPaid = domain.whoPaid,
     )
   }
 
@@ -27,11 +25,9 @@ class ExpenseMapper {
       description = document.description,
       date = document.date,
       amount = document.amount,
-      currency = document.currency,
-      category = document.category,
       groupId = document.groupId,
-      friend = document.friend,
       userId = document.userId,
+      whoPaid = document.whoPaid,
     )
   }
 

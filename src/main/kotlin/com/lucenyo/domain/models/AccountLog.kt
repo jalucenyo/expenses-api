@@ -4,16 +4,15 @@ import java.math.BigDecimal
 import java.time.OffsetDateTime
 import java.util.UUID
 
-data class Expense(
+data class AccountLog(
   val id: UUID,
   val userId: String,
-
-  val description: String,
+  val debtor: UUID,
+  val creditor: UUID,
   val date: OffsetDateTime,
-  val amount: BigDecimal,
-
+  val debit: BigDecimal = BigDecimal.ZERO,
+  val credit: BigDecimal = BigDecimal.ZERO,
+  val currency: String,
   val groupId: UUID,
-  val whoPaid: UUID,
-//  val splits: List<SplitExpense>
-
+  val expenseId: UUID,
 )

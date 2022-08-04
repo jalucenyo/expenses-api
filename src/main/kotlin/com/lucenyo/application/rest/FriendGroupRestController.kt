@@ -1,7 +1,7 @@
 package com.lucenyo.application.rest
 
-import com.lucenyo.domain.commands.CreateFriendGroupCommand
-import com.lucenyo.domain.commands.UpdateFriendGroupCommand
+import com.lucenyo.domain.commands.CreateFriendGroup
+import com.lucenyo.domain.commands.UpdateFriendGroup
 import com.lucenyo.domain.models.FriendGroup
 import com.lucenyo.domain.usecases.FriendGroupUseCases
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -28,14 +28,14 @@ class FriendGroupRestController(
   }
 
   @PostMapping
-  fun create(@RequestBody command: CreateFriendGroupCommand): Mono<UUID> {
+  fun create(@RequestBody command: CreateFriendGroup): Mono<UUID> {
     return friendGroupUseCases.create(command)
   }
 
   @PutMapping("/{id}")
   fun update(
     @PathVariable id: UUID,
-    @RequestBody command: UpdateFriendGroupCommand): Mono<FriendGroup> {
+    @RequestBody command: UpdateFriendGroup): Mono<FriendGroup> {
     return friendGroupUseCases.update(id, command)
   }
 
