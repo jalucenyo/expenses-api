@@ -11,7 +11,7 @@ class FriendGroupExpenseValidation(
   ): ExpenseValidation{
 
   override suspend fun invoke(expense: Expense): Boolean {
-    return friendGroupRepository.findByIdAndUserId(expense.id, expense.userId)?.let{ true } ?:
+    return friendGroupRepository.findByIdAndUserId(expense.groupId, expense.userId)?.let{ true } ?:
     throw NotFoundException(field = "group")
   }
 

@@ -11,7 +11,7 @@ class WhoPaidExpenseValidation(
   ): ExpenseValidation{
 
   override suspend fun invoke(expense: Expense): Boolean {
-    return friendRepository.findByIdAndUserId(expense.groupId, expense.userId)?.let { true } ?:
+    return friendRepository.findByIdAndUserId(expense.whoPaid, expense.userId)?.let { true } ?:
     throw NotFoundException(field = "WhoPaid")
   }
 
