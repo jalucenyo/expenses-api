@@ -6,7 +6,7 @@ import com.lucenyo.domain.repositories.FriendRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CheckToValidation(
+class CheckToAccountLogValidation(
   val friendRepository: FriendRepository,
 ): AccountLogValidation {
 

@@ -3,11 +3,10 @@ package com.lucenyo.domain.validations.accountlog
 import com.lucenyo.domain.exceptions.NotFoundException
 import com.lucenyo.domain.models.AccountLog
 import com.lucenyo.domain.repositories.FriendGroupRepository
-import com.lucenyo.domain.repositories.FriendRepository
 import org.springframework.stereotype.Service
 
 @Service
-class FriendGroupValidation(
+class FriendGroupAccountLogValidation(
   val friendGroupRepository: FriendGroupRepository
 ): AccountLogValidation {
 
