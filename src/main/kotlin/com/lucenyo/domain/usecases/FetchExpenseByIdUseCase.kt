@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono
 import java.util.UUID
 
 interface FetchExpenseByIdUseCase {
-  operator fun invoke(id: UUID): Mono<Expense>
+  suspend operator fun invoke(id: UUID): Expense
 }
 
 @Service
@@ -16,8 +16,8 @@ class FetchExpenseByIdUseCaseImpl(
   val repository: ExpenseRepository,
 ): FetchExpenseByIdUseCase {
 
-  override fun invoke(id: UUID): Mono<Expense> {
-    return Mono.error(NotFoundException())
+  override suspend fun invoke(id: UUID): Expense {
+    return throw NotFoundException()
   }
 
 }

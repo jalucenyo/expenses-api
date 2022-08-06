@@ -12,7 +12,7 @@ import java.util.UUID
 
 interface UploadTicketUseCase {
 
-  operator fun invoke(command: CreateTicket, ticketImage: Mono<FilePart>): Mono<UUID>
+  suspend operator fun invoke(createTicket: CreateTicket, ticketImage: FilePart): UUID
 
 }
 
@@ -23,21 +23,16 @@ class UploadTicketUseCaseImpl(
 
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  override fun invoke(command: CreateTicket, ticketImage: Mono<FilePart>): Mono<UUID> {
+  override suspend operator fun invoke(createTicket: CreateTicket, ticketImage: FilePart): UUID {
 
-    return ticketImage
-      .map {
-        Ticket(
-          id = UUID.randomUUID(),
-          expenseId = command.expenseId,
-          image = it
-        )
-      }
-      .flatMap { ticketRepository.create(it) }
-      .doOnError { error ->
-        log.error("Upload error: ", error)
-        throw UploadErrorException()
-      }
+    val ticket = Ticket(
+      id = UUID.randomUUID(),
+      expenseId = createTicket.expenseId,
+      image = ticketImage
+    )
+
+    return ticketRepository.create(ticket) ?: throw UploadErrorException()
+
   }
 
 }

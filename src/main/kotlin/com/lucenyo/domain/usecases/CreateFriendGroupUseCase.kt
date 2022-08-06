@@ -6,11 +6,10 @@ import com.lucenyo.domain.repositories.FriendGroupRepository
 import com.lucenyo.infraestructure.security.AuthenticationFacade
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
 import java.util.UUID
 
 interface CreateFriendGroupUseCase {
-  operator fun invoke(createGroup: CreateFriendGroup): Mono<UUID>
+  suspend operator fun invoke(createGroup: CreateFriendGroup): UUID
 }
 
 @Service
@@ -21,19 +20,18 @@ class CreateFriendGroupUseCaseImpl(
 
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  override fun invoke(createGroup: CreateFriendGroup): Mono<UUID> {
+  override suspend operator fun invoke(createGroup: CreateFriendGroup): UUID {
 
-    return authentication.getAuthentication()
-      .flatMap { auth -> repository.create(
-        FriendGroup(
-          id = UUID.randomUUID(),
-          name = createGroup.name,
-          friends = createGroup.friends,
-          currency = createGroup.currency,
-          userId = auth.name
-        ))
-      }
-      .doOnSuccess{ log.info("Create friend group: {}", it)  }
+    val auth = authentication.getAuth()
+
+    return repository.create(
+      FriendGroup(
+        id = UUID.randomUUID(),
+        name = createGroup.name,
+        friends = createGroup.friends,
+        currency = createGroup.currency,
+        userId = auth.name
+      ))
 
   }
 

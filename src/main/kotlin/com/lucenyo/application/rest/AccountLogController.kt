@@ -2,11 +2,11 @@ package com.lucenyo.application.rest
 
 import com.lucenyo.domain.commands.CreateAccountLog
 import com.lucenyo.domain.usecases.AccountLogUseCases
+import kotlinx.coroutines.flow.Flow
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Flux
 import java.util.UUID
 
 @RestController
@@ -16,8 +16,15 @@ class AccountLogController(
 ) {
 
   @PostMapping
-  fun create(@RequestBody accountLogs: List<CreateAccountLog>): Flux<UUID> {
+  suspend fun create(@RequestBody accountLogs: List<CreateAccountLog>): Flow<UUID> {
     return accountLogUseCases.create(accountLogs)
   }
+
+//  @GetMapping("/{userId}")
+//  fun balanceByUser(@PathVariable userId: String): Mono<BalanceResume> {
+//
+//
+//
+//  }
 
 }

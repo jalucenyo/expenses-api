@@ -4,5 +4,6 @@ import org.springframework.security.core.Authentication
 import reactor.core.publisher.Mono
 
 interface AuthenticationFacade {
-  fun getAuthentication(): Mono<Authentication>
+    suspend fun getAuth(): Authentication
+    fun getAuthentication(): Mono<Authentication>
 }

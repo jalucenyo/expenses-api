@@ -6,6 +6,6 @@ import java.util.UUID
 
 interface TicketRepository {
 
-  fun create(ticket: Ticket): Mono<UUID>
+  suspend fun create(ticket: Ticket): UUID?
 
 }

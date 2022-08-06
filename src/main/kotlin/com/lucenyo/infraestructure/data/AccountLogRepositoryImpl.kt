@@ -4,8 +4,10 @@ import com.lucenyo.domain.models.AccountLog
 import com.lucenyo.domain.repositories.AccountLogRepository
 import com.lucenyo.infraestructure.data.source.AccountLogDbDataSource
 import com.lucenyo.infraestructure.data.source.mappers.AccountLogMapper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.reactive.asFlow
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
 import java.util.*
 
 @Service
@@ -14,8 +16,8 @@ class AccountLogRepositoryImpl(
   val mapper: AccountLogMapper
 ): AccountLogRepository {
 
-  override fun create(accountLogs: List<AccountLog>): Flux<UUID> {
-    return dataSource.saveAll(accountLogs.map { mapper.toDocument(it) }).map { it.id }
+  override suspend fun create(accountLogs: List<AccountLog>): Flow<UUID> {
+    return dataSource.saveAll(accountLogs.map(mapper::toDocument)).asFlow().map { it.id }
   }
 
 }

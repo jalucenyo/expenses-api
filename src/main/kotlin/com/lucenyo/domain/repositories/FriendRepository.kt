@@ -6,8 +6,8 @@ import java.util.UUID
 
 interface FriendRepository {
 
-  fun create(friend: Friend): Mono<UUID>
+  suspend fun create(friend: Friend): UUID
 
-  fun findByIdAndUserId(id: UUID, userId: String): Mono<Friend>
+  suspend fun findByIdAndUserId(id: UUID, userId: String): Friend?
 
 }

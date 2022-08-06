@@ -1,52 +1,40 @@
 package com.lucenyo.domain.usecases
 
 import com.lucenyo.domain.commands.CreateExpense
-import com.lucenyo.domain.exceptions.NotFoundException
 import com.lucenyo.domain.models.Expense
 import com.lucenyo.domain.repositories.ExpenseRepository
-import com.lucenyo.domain.repositories.FriendGroupRepository
-import com.lucenyo.domain.repositories.FriendRepository
+import com.lucenyo.domain.validations.expense.ExpenseValidation
 import com.lucenyo.infraestructure.security.AuthenticationFacade
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
 import java.util.*
 
 interface CreateExpenseUseCase {
-  operator fun invoke(createExpense: CreateExpense): Mono<UUID>
+  suspend operator fun invoke(createExpense: CreateExpense): UUID
 }
 
 @Service
 class CreateExpenseUseCaseImpl(
   val expenseRepository: ExpenseRepository,
-  val friendGroupRepository: FriendGroupRepository,
-  val friendRepository: FriendRepository,
   val authentication: AuthenticationFacade,
+  val validations: List<ExpenseValidation>,
   ): CreateExpenseUseCase {
 
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  override fun invoke(createExpense: CreateExpense): Mono<UUID> {
+  override suspend operator fun invoke(createExpense: CreateExpense): UUID {
 
     log.info("CreateExpenseUseCase : {} ", createExpense)
 
-    return authentication.getAuthentication()
-      .filterWhen{ auth -> checkFriendGroupExist(createExpense.groupId, auth) }
-      .filterWhen { auth -> checkWhoPaid(createExpense.whoPaid, auth) }
-      .map { auth -> mapExpense(auth, createExpense) }
-      .flatMap { expense -> expenseRepository.create(expense) }
+    val auth = authentication.getAuth()
+    val expense = mapExpense(auth, createExpense)
 
-  }
+    log.info("Check validations, $validations")
+    validations.forEach { it(expense) }
 
-  private fun checkFriendGroupExist(groupId: UUID, auth: Authentication): Mono<Boolean>{
-    return friendGroupRepository.findByIdAndUserId(groupId, auth.name).map { true }
-      .switchIfEmpty(Mono.error(NotFoundException()))
-  }
+    return expenseRepository.create(expense)
 
-  private fun checkWhoPaid(friendId: UUID, auth: Authentication): Mono<Boolean> {
-    return friendRepository.findByIdAndUserId(friendId, auth.name).map { true }
-      .switchIfEmpty(Mono.error(NotFoundException()))
   }
 
   private fun mapExpense( auth: Authentication,

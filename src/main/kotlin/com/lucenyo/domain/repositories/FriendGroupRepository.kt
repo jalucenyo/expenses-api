@@ -1,20 +1,19 @@
 package com.lucenyo.domain.repositories
 
 import com.lucenyo.domain.models.FriendGroup
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface FriendGroupRepository {
 
-  fun create(friendGroup: FriendGroup): Mono<UUID>
+  suspend fun create(friendGroup: FriendGroup): UUID
 
-  fun delete(id: UUID): Mono<Void>
+  suspend fun delete(id: UUID)
 
-  fun update(friendGroup: FriendGroup): Mono<FriendGroup>
+  suspend fun update(friendGroup: FriendGroup): FriendGroup?
 
-  fun findByIdAndUserId(id: UUID, userId: String): Mono<FriendGroup>
+  suspend fun findByIdAndUserId(id: UUID, userId: String): FriendGroup?
 
-  fun findByUserId(userId: String): Flux<FriendGroup>
+  suspend fun findByUserId(userId: String): Flow<FriendGroup>
 
 }

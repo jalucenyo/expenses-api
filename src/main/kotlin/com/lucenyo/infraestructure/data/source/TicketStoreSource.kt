@@ -3,12 +3,10 @@ package com.lucenyo.infraestructure.data.source
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.util.IOUtils
-import com.lucenyo.domain.exceptions.UploadErrorException
-import org.slf4j.LoggerFactory
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
 import java.io.SequenceInputStream
 
 @Service
@@ -17,7 +15,7 @@ class TicketStoreSource(
   @Value("\${amazon.s3.bucket-name}") val bucketName: String,
   ) {
 
-  fun upload(fileName: String, metadata: Map<String, String>, file: FilePart): Mono<String> {
+  suspend fun upload(fileName: String, metadata: Map<String, String>, file: FilePart): String? {
 
     val objectMetadata = ObjectMetadata();
     objectMetadata.setHeader("Content-Type", file.headers().contentType.toString())
@@ -28,6 +26,7 @@ class TicketStoreSource(
       .reduce { s, d -> SequenceInputStream(s, d) }
       .map { store.putObject(bucketName, fileName, it, objectMetadata) }
       .map { it.contentMd5 }
+      .awaitFirstOrNull()
   }
 
   fun download(fileName: String): ByteArray{

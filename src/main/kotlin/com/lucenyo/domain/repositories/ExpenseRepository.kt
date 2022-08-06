@@ -1,19 +1,19 @@
 package com.lucenyo.domain.repositories
 
 import com.lucenyo.domain.models.Expense
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface ExpenseRepository {
 
-  fun create(expense: Expense): Mono<UUID>
+  suspend fun create(expense: Expense): UUID
 
-  fun delete(id: UUID): Mono<Void>
+  suspend fun delete(id: UUID)
 
-  fun update(expense: Expense): Mono<Expense>
+  suspend fun update(expense: Expense): Expense?
 
-  fun findByFriendGroupId(friendGroupId: UUID): Flux<Expense>
+  suspend fun findByFriendGroupId(friendGroupId: UUID): Flow<Expense>
 
-  fun findByIdAndUserId(id: UUID, userId: String): Mono<Expense>
+  suspend fun findByIdAndUserId(id: UUID, userId: String): Expense?
+
 }

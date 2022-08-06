@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Mono
 import java.util.UUID
 
 @RestController
@@ -17,15 +16,10 @@ class TicketRestController(
 ) {
 
   @PostMapping
-  fun create(@RequestPart command: CreateTicket,
-             @RequestPart ticketImage: Mono<FilePart>): Mono<UUID> {
+  suspend fun create(@RequestPart command: CreateTicket,
+                     @RequestPart ticketImage: FilePart): UUID {
 
     return ticketUseCases.upload(command, ticketImage)
   }
-
-//  @GetMapping
-//  fun getTicket(@PathVariable ticketId: UUID): Mono<UUID> {
-//
-//  }
 
 }

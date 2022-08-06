@@ -3,6 +3,7 @@ package com.lucenyo.application.rest
 import com.lucenyo.domain.commands.CreateExpense
 import com.lucenyo.domain.models.Expense
 import com.lucenyo.domain.usecases.ExpenseUseCase
+import kotlinx.coroutines.flow.Flow
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -21,29 +22,22 @@ class ExpenseRestController(
 ) {
 
   @GetMapping("/friendGroup/{friendGroupId}")
-  fun listExpenses(@PathVariable friendGroupId: UUID): Flux<Expense> {
+  suspend fun listExpenses(@PathVariable friendGroupId: UUID): Flow<Expense> {
     return expenseUseCase.fetchByFriendGroupId(friendGroupId);
   }
 
   @GetMapping("/{expenseId}")
-  fun getExpense(@PathVariable expenseId: UUID): Mono<Expense>{
+  suspend fun getExpense(@PathVariable expenseId: UUID): Expense{
     return expenseUseCase.fetchById(expenseId);
   }
 
   @PostMapping
-  fun create(@RequestBody createExpense: CreateExpense): Mono<UUID> {
+  suspend fun create(@RequestBody createExpense: CreateExpense): UUID {
     return expenseUseCase.create(createExpense)
   }
 
-//  @PutMapping("/{expenseId}")
-//  fun update(
-//    @PathVariable expenseId: UUID,
-//    @RequestBody command: UpdateExpenseCommand): Mono<Expense> {
-//    return expenseUseCase.update(expenseId, command)
-//  }
-
   @DeleteMapping("/{expenseId}")
-  fun delete( @PathVariable expenseId: UUID): Mono<Void>{
+  suspend fun delete(@PathVariable expenseId: UUID) {
     return expenseUseCase.delete(expenseId);
   }
 

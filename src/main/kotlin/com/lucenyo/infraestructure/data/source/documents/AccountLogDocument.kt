@@ -6,7 +6,7 @@ import java.math.BigDecimal
 import java.time.OffsetDateTime
 import java.util.UUID
 
-@Document("account-log")
+@Document("account_log")
 data class AccountLogDocument(
   @Id
   val id: UUID,

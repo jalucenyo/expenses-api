@@ -18,38 +18,8 @@ class FriendRestController(
 ) {
 
   @PostMapping
-  fun create(@Valid @RequestBody createFriend: CreateFriend): Mono<UUID> {
+  suspend fun create(@Valid @RequestBody createFriend: CreateFriend): UUID {
     return friendUseCases.create(createFriend)
   }
-
-//  @PutMapping("/{id}")
-//  fun update(@PathVariable id: String): Mono<UUID> {
-//
-//  }
-//
-//  @DeleteMapping("/{id}")
-//  fun delete(@PathVariable id: UUID): Mono<Void> {
-//
-//  }
-//
-//  @PutMapping("/{id}/photo")
-//  fun addPhotoByFriendId(@PathVariable id: UUID): Mono<UUID>{
-//
-//  }
-//
-//  @GetMapping("{id}/photo")
-//  fun getPhotoByFriendId(@PathVariable id: String): Mono<Void> {
-//
-//  }
-//
-//  @GetMapping
-//  fun getFriendsByUserLogged(): Flux<Friend> {
-//
-//  }
-//
-//  @GetMapping
-//  fun getFriendById(): Mono<Friend> {
-//
-//  }
 
 }

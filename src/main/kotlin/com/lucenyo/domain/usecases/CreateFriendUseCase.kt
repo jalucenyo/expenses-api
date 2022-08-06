@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono
 import java.util.UUID
 
 interface CreateFriendUseCase {
-  operator fun invoke(createFriend: CreateFriend): Mono<UUID>
+  suspend operator fun invoke(createFriend: CreateFriend): UUID
 }
 
 @Service
@@ -18,19 +18,19 @@ class CreateFriendUseCaseImpl(
   val friendRepository: FriendRepository
 ): CreateFriendUseCase {
 
-  override fun invoke(createFriend: CreateFriend): Mono<UUID> {
+  override suspend operator fun invoke(createFriend: CreateFriend): UUID {
 
-    return authentication.getAuthentication()
-      .flatMap { auth ->
-        friendRepository.create(Friend(
-          id = UUID.randomUUID(),
-          userId = auth.name,
-          name = createFriend.name,
-          email = createFriend.email,
-          phone = createFriend.phone,
-          photo = "",
-        ))
-      }
+    val auth = authentication.getAuth();
+
+    return friendRepository.create(Friend(
+      id = UUID.randomUUID(),
+      userId = auth.name,
+      name = createFriend.name,
+      email = createFriend.email,
+      phone = createFriend.phone,
+      photo = "",
+    ))
+
   }
 
 }

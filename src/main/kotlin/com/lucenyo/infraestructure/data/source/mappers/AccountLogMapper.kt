@@ -10,8 +10,8 @@ class AccountLogMapper {
   fun toDocument(domain: AccountLog): AccountLogDocument = AccountLogDocument(
     id = domain.id,
     userId = domain.userId,
-    debtor = domain.debtor,
-    creditor = domain.creditor,
+    debtor = domain.to,
+    creditor = domain.from,
     date = domain.date,
     debit = domain.debit,
     credit = domain.credit,
